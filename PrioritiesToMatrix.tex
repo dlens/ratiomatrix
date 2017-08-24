@@ -4,6 +4,7 @@
 \usepackage{amsmath}
 \usepackage{amsthm}
 \newtheorem{lemma}{Lemma}
+\newtheorem{note}{Note}
 \makeindex
 %\usepackage{xltxtra}
 
@@ -43,6 +44,14 @@ paper.
 Given a priority vector $\vec{p}=(p_1, \ldots, p_n)$, we construct the matrix $M$
 whose priority vector is $\vec{p}$ by taking the matrix
 made of the ratios of the $p_i$'s.  We state this result as the following lemma.
+
+\begin{note}
+The reason we use the ratio matrix can be easily seen with an example.  If the 
+priority vector is alt1=0.1, alt2=0.3, and alt3=0.6 we can easily see that
+alt3 is 6 times better than alt1, because alt3 has a score of 0.6 and alt1 has
+a score of 0.1 and the value of 6 is simply $0.6/0.1$ the ratio of alt3's score
+to that of alt1's score.
+\end{note}
 
 \begin{lemma}
 Let $\vec{p}=(p_1, \ldots, p_n)$ be the priority vector of $n$ items.  If we define
