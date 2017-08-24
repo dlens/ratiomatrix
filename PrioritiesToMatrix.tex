@@ -1,0 +1,172 @@
+\documentclass[10pt,twoside]{article}
+%\usepackage{fontspec}
+\usepackage{mathrsfs}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\newtheorem{lemma}{Lemma}
+\makeindex
+%\usepackage{xltxtra}
+
+\usepackage{dljmv2overleaf}
+\usepackage{dsfont}
+\title{Priorities to Pairwise}
+\author{Bill Adams}
+\date{Aug 2017}
+%\setcounter{tocdepth}{2}
+
+\usepackage[hidelinks]{hyperref}
+
+
+\begin{document}
+\maketitle
+%\tableofcontents
+
+\begin{abstract}
+Given a prioritiy vector $\vec{p}$ there is a method to create a pairwise comparison matrix $M_{\vec{p}}$ that has $\vec{p}$ as its priority vector.  In this paper we provide context for why this calculation could be useful, the definition of the calculation itself, and a few example calculations.
+\end{abstract}
+
+\section{Introduction}
+Given $n$ items whose $n \times n$ pairwise comparison matrix is $M$, standard
+AHP theory uses the largest eigenvector calculation to find the priority vector
+$\vec{p}_M$ for those $n$ items.  In addition, standard AHP theory provides a way
+to work in reverse; i.e. given a priority vector $\vec{p}$ we can create a
+pairwise comparison matrix $M_{\vec{p}}$ whose largest eigenvector is $\vec{p}$.
+
+This method of working in reverse can be useful in the following circumstance.
+If one knows the priority vector for a group of users, but the software that gives
+that priority does not provide the group pairwise comparison matrix, one can
+reconstruct a pairwise comparison matrix for the group that results in the
+given priority vector.  This circumstance is what prompted the writing of this
+paper.
+
+\section{Calculation and proof}
+Given a priority vector $\vec{p}=(p_1, \ldots, p_n)$, we construct the matrix $M$
+whose priority vector is $\vec{p}$ by taking the matrix
+made of the ratios of the $p_i$'s.  We state this result as the following lemma.
+
+\begin{lemma}
+Let $\vec{p}=(p_1, \ldots, p_n)$ be the priority vector of $n$ items.  If we define
+the $n\times n$ matrix $M_{\vec{p}}=(m_{ij})$ by the formula
+$$m_{ij} = \frac{p_i}{p_j}$$
+then the priority vector for $M_{\vec{p}}$ is $\vec{p}$.
+\end{lemma}
+\begin{proof}
+Let largest eigenvector of $M_{\vec{p}}$ can be calculated from the following formula
+$$\lim_{n \to \infty} \frac{b^n}{\sum_{i=1}^n b^n_i}$$
+where $b^i$ is an $n$ dimensional vector defined using the following recursive formula:
+\begin{eqnarray*}
+	b^0 &=& (1, \ldots, 1) \\
+	b^{i+1} &=& M_{\vec{p}} \cdot b^i
+\end{eqnarray*}	
+Thus we need only understand $b^i$.  Let us begin by calculating 
+$b^1$.
+\begin{eqnarray*}
+	b^1 &=& M_{\vec{p}} \cdot b^0 \\
+	&=&
+	\begin{bmatrix}
+	1 & p_1/p_2 & \ldots & p_1/p_n\\
+	p_2/p_1 & 1 & \ldots & p_2/p_n \\
+	\vdots & vdots & \ddots & \vdots \\
+	p_n/p_1 & p_n/p_2 & \ldots & 1	
+	\end{bmatrix}
+	\begin{bmatrix}
+	1 \\
+	1 \\
+	\vdots \\
+	1
+	\end{bmatrix} \\
+	&=& \begin{bmatrix}
+	\sum_{i=1}^n p_1/p_i	 \\
+	\sum_{i=1}^n p_2/p_i	 \\
+	\ldots \\
+	\sum_{i=1}^n p_n/p_i	
+	\end{bmatrix} \\
+	&=& 
+	\begin{bmatrix}
+		p_1 \sum_{i=1}^n 1/p_i \\
+		p_2 \sum_{i=1}^n 1/p_i \\
+		\vdots \\
+		p_n \sum_{i=1}^n 1/p_i
+	\end{bmatrix} \\
+	&=&\sum_{i=1}^n 1/p_i
+	\begin{bmatrix}
+	p_1 \\
+	p_2 \\
+	\ldots \\
+	p_n	
+	\end{bmatrix}
+\end{eqnarray*}
+Since we are dividing by the sum of the elements of $b^i$ in the limit, we can
+multiply or divide $b^i$ by any constant and not change the limit.  Thus effectively
+$b^1 = (p_1, \ldots, p_n)$.
+
+Next we claim that $b^2 = (p_1, \ldots p_n)$.  If that is the case, then we know
+that all of the $b^i$'s for $i\geq 1$ are that as well, and we will have shown that
+the largest eigenvector of $M_{\vec{p}}$ is $\vec{p}$.  Let us calculate the value
+of $b^2$ to complete the proof.
+
+\begin{eqnarray*}
+b^2 &=& M_{\vec{p}} \cdot b^1 \\
+&=& 	
+	\begin{bmatrix}
+	1 & p_1/p_2 & \ldots & p_1/p_n\\
+	p_2/p_1 & 1 & \ldots & p_2/p_n \\
+	\vdots & vdots & \ddots & \vdots \\
+	p_n/p_1 & p_n/p_2 & \ldots & 1	
+	\end{bmatrix}
+	\begin{bmatrix}
+	p_1 \\
+	p_2 \\
+	\vdots \\
+	p_n
+	\end{bmatrix} \\
+	&=&
+	\begin{bmatrix}
+	n p_1 \\
+	n p_2 \\
+	\vdots \\
+	n p_n	
+	\end{bmatrix}
+\end{eqnarray*}
+Again, since we are dividing by the sum of the elements of $b^2$ in the limit, we
+can multiply or divide by any constant and not effect the limit calculation.  Thus, effectively, $b^2$ is effectively $(p_1, \ldots, p_n)$.
+\end{proof}
+
+\section{Examples}
+We calculate the matrix $M_{\vec{p}}$ for several priority vectors $\vec{p}$ below.
+\begin{enumerate}
+	\item If $\vec{p} = (1/2, 1/3, 1/6)$, the ratio matrix $M_{\vec{p}}$ is:
+	\begin{eqnarray*}
+	M_{\vec{p}} &=&
+	\begin{bmatrix}
+		1 & \frac{1/2}{1/3} & \frac{1/2}{1/6} \\
+		\frac{1/3}{1/2} & 1 & \frac{1/3}{1/6} \\
+		\frac{1/6}{1/2} & \frac{1/6}{1/3} & 1
+	\end{bmatrix} \\
+	&=&
+	\begin{bmatrix}
+		1 & 3/2 & 3 \\
+		2/3 & 1 & 2 \\
+		1/3 & 1/2 & 1
+	\end{bmatrix}
+	\end{eqnarray*}
+	\item If $\vec{p} = (3, 2, 1, 4)$ we can calculate the ratio matrix as below.  Notice that the priority vector need not be normalized (i.e. its components need not sum to 1).
+	\begin{eqnarray*}
+		M_{\vec{p}} &=&
+		\begin{bmatrix}
+			1 & \frac{3}{2} & \frac{3}{1}& \frac{3}{4} \\
+			\frac{2}{3}& 1 & \frac{2}{1}& \frac{2}{4} \\
+			\frac{1}{3} & \frac{1}{2} & 1 & \frac{1}{4} \\
+			\frac{4}{3} & \frac{4}{2} & \frac{4}{1} & 1
+		\end{bmatrix} \\
+		&=&
+		\begin{bmatrix}
+			1 & \frac{3}{2} & 3 & \frac{3}{4} \\
+			\frac{2}{3} & 1 & 2 & \frac{1}{2} \\
+			\frac{1}{3} & \frac{1}{2} & 1 & \frac{1}{4} \\
+			\frac{4}{3} & 2 & 4 & 1
+		\end{bmatrix}
+	\end{eqnarray*}
+\end{enumerate}
+
+\end{document}
