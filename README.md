@@ -10,4 +10,4 @@ examples are shown in a Jupyter notebook.
 The above sample code uses [Jupyter](http://jupyter.org/) with python code.  
 
 * Please see [installing Jupyter](http://jupyter.readthedocs.io/en/latest/install.html) for information about getting started with Jupyter. 
-* See section [Installing Jupyter using Anaconda and conda](http://jupyter.readthedocs.io/en/latest/install.html#id3) for the easiest method of getting started with Jupyter.
+* See the section of that document titled [Installing Jupyter using Anaconda and conda](http://jupyter.readthedocs.io/en/latest/install.html#id3) for the easiest method of getting started with Jupyter.
